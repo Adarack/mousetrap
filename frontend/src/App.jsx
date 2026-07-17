@@ -347,6 +347,7 @@ export default function App() {
             <StatusCard
               autoUpload={autoUpload}
               autoVIP={autoVIP}
+              autoWedge={autoWedge}
               onSessionDataChanged={() => loadSession(selectedLabel)}
               onStatusUpdate={handleStatusUpdate}
               ref={statusCardRef}

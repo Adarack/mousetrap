@@ -93,10 +93,10 @@ export default function PerkAutomationCard(props) {
   const [guardrails, setGuardrails] = useState(null);
   const [currentUsername, setCurrentUsername] = useState(null);
   const [uploadDisabled, setUploadDisabled] = useState(false);
-  const [_wedgeDisabled, setWedgeDisabled] = useState(false);
+  const [wedgeDisabled, setWedgeDisabled] = useState(false);
   const [vipDisabled, setVIPDisabled] = useState(false);
   const [uploadGuardMsg, setUploadGuardMsg] = useState('');
-  const [_wedgeGuardMsg, setWedgeGuardMsg] = useState('');
+  const [wedgeGuardMsg, setWedgeGuardMsg] = useState('');
   const [vipGuardMsg, setVIPGuardMsg] = useState('');
   // Upload automation options state
   const [triggerType, setTriggerType] = useState('time');
@@ -105,7 +105,7 @@ export default function PerkAutomationCard(props) {
   const [expanded, setExpanded] = useState(false);
   const [uploadAmount, setUploadAmount] = useState(50);
   const [vipWeeks, setVipWeeks] = useState(4);
-  const [wedgeMethod, _setWedgeMethod] = useState('points');
+  const [wedgeMethod, setWedgeMethod] = useState('points');
   const [wedgeTriggerType, setWedgeTriggerType] = useState('time');
   const [wedgeTriggerDays, setWedgeTriggerDays] = useState(7);
   const [confirmVIPOpen, setConfirmVIPOpen] = useState(false);
@@ -518,8 +518,8 @@ export default function PerkAutomationCard(props) {
               />
             </Tooltip>
           </Box>
-          {/* Wedge Section hidden - MAM removed wedge purchase from their API */}
-          {/* <AutomationSection
+          {/* Wedge Section (modularized) */}
+          <AutomationSection
             confirmButton={
               <Tooltip title="This will instantly purchase a wedge using the selected method.">
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
@@ -534,6 +534,13 @@ export default function PerkAutomationCard(props) {
               </Tooltip>
             }
             enabled={autoWedge}
+            extraControls={
+              <Tooltip title="When both Wedge and Upload Credit automation are enabled, they alternate: one purchase per run, whichever type wasn't bought most recently.">
+                <IconButton size="small" sx={{ ml: 1 }}>
+                  <InfoOutlinedIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            }
             onSelectChange={(e) => setWedgeMethod(e.target.value)}
             onToggle={(e) => setAutoWedgeCombined(e.target.checked)}
             onTriggerDaysChange={(e) => setWedgeTriggerDays(parseInt(e.target.value, 10) || 0)}
@@ -555,7 +562,7 @@ export default function PerkAutomationCard(props) {
             triggerPointThreshold={wedgeTriggerPointThreshold}
             triggerTypeValue={wedgeTriggerType}
           />
-          <Divider sx={{ mb: 3 }} /> */}
+          <Divider sx={{ mb: 3 }} />
 
           {/* VIP Section (modularized) */}
           <AutomationSection
@@ -638,6 +645,13 @@ export default function PerkAutomationCard(props) {
               </Tooltip>
             }
             enabled={autoUpload}
+            extraControls={
+              <Tooltip title="When both Upload Credit and Wedge automation are enabled, they alternate: one purchase per run, whichever type wasn't bought most recently.">
+                <IconButton size="small" sx={{ ml: 1 }}>
+                  <InfoOutlinedIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            }
             onSelectChange={(e) => setUploadAmount(parseFloat(e.target.value) || 0)}
             onToggle={(e) => setAutoUploadCombined(e.target.checked)}
             onTriggerDaysChange={(e) => setTriggerDays(parseInt(e.target.value, 10) || 0)}

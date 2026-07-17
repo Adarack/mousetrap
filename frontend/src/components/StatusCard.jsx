@@ -22,6 +22,7 @@ import TimerDisplay from './TimerDisplay';
 
 /**
  * @typedef {{
+ *   autoWedge:boolean,
  *   autoVIP:boolean,
  *   autoUpload:boolean,
  *   onStatusUpdate?:function,
@@ -30,7 +31,7 @@ import TimerDisplay from './TimerDisplay';
  */
 const StatusCard = forwardRef(
   /** @param {StatusCardProps} props */
-  function StatusCard({ autoVIP, autoUpload, onStatusUpdate }, ref) {
+  function StatusCard({ autoWedge, autoVIP, autoUpload, onStatusUpdate }, ref) {
     const {
       sessionLabel,
       setDetectedIp,
@@ -567,7 +568,11 @@ const StatusCard = forwardRef(
                         <Alert severity="warning">{status.proxy_error}</Alert>
                       </Box>
                     )}
-                    <AutomationStatusRow autoUpload={autoUpload} autoVIP={autoVIP} />
+                    <AutomationStatusRow
+                      autoUpload={autoUpload}
+                      autoVIP={autoVIP}
+                      autoWedge={autoWedge}
+                    />
                     <MamDetailsAccordion status={status} />
                     {/* Network & Proxy Details Accordion */}
                     <NetworkProxyDetailsAccordion status={status} />
