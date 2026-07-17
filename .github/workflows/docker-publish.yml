@@ -1,17 +1,16 @@
 name: Publish Docker image
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Linters"]
+    types:
+      - completed
     branches: ["main"]
-    paths-ignore:
-      - 'README.md'
-      - 'docs/**'
-      - 'images/**'
-      - 'tests/**'
   workflow_dispatch:
 
 jobs:
   build:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     permissions:
@@ -22,6 +21,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
           fetch-depth: 0  # full history needed for git tags
 
       - name: Determine next version from tags
