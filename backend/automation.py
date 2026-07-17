@@ -168,7 +168,9 @@ async def _run_upload_for_session(label: str, now: datetime) -> None:
                 f"{points} - {purchase_cost} = {int(points) - purchase_cost} "
                 f"< {session_min_points}"
             )
-            log_msg = "[AutoUpload] SKIP: Automated Upload Credit purchase for session '%s' skipped: %s"
+            log_msg = (
+                "[AutoUpload] SKIP: Automated Upload Credit purchase for session '%s' skipped: %s"
+            )
             _logger.info(log_msg, label, guardrail_reason)
             append_ui_event_log(
                 {
@@ -235,9 +237,7 @@ async def _run_upload_for_session(label: str, now: datetime) -> None:
         return
     # --- Automation-level point threshold guardrail ---
     if trigger_type in ("points", "both") and int(points) < int(trigger_point_threshold):
-        guardrail_reason = (
-            f"Below automation point threshold: {points} < {trigger_point_threshold}"
-        )
+        guardrail_reason = f"Below automation point threshold: {points} < {trigger_point_threshold}"
         log_msg = "[AutoUpload] SKIP: Automated Upload Credit purchase for session '%s' skipped: %s"
         _logger.info(log_msg, label, guardrail_reason)
         append_ui_event_log(
@@ -744,9 +744,7 @@ async def _run_wedge_for_session(label: str, now: datetime) -> None:
         return
     # --- Automation-level point threshold guardrail ---
     if trigger_type in ("points", "both") and int(points) < int(trigger_point_threshold):
-        guardrail_reason = (
-            f"Below automation point threshold: {points} < {trigger_point_threshold}"
-        )
+        guardrail_reason = f"Below automation point threshold: {points} < {trigger_point_threshold}"
         log_msg = "[AutoWedge] SKIP: Automated Wedge purchase for session '%s' skipped: %s"
         _logger.info(log_msg, label, guardrail_reason)
         append_ui_event_log(
